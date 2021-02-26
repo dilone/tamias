@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Sürüm',
-    'powered'               => 'Altyapı Akaunting',
-    'link'                  => 'https://akaunting.com/tr',
+    'powered'               => 'Altyapı CuatroKB',
+    'link'                  => 'https://cuatrokb.com/tr',
     'software'              => 'Ücretsiz Ön Muhasebe Programı',
 
 ];

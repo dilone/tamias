@@ -10,7 +10,7 @@ return [
         'upcoming_bills'    => '{1} :count наближаваща фактура|[2,*] :count наближаващи фактури',
         'view_all'          => 'Вижте всички'
     ],
-    'docs_link'             => 'https://akaunting.com/docs',
-    'support_link'          => 'https://akaunting.com/support',
+    'docs_link'             => 'https://cuatrokb.com/docs',
+    'support_link'          => 'https://cuatrokb.com/support',
 
 ];

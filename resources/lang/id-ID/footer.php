@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versi',
-    'powered'               => 'Didukung oleh Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Didukung oleh CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Perangkat Lunak Akutansi Gratis',
 
 ];

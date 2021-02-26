@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <span class="table-text text-primary">Akaunting</span>
+            <span class="table-text text-primary">Sistema de Facturación</span>
         </div>
 
         <div class="card-body">

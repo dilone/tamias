@@ -22,7 +22,7 @@
             <div class="card-body">
                 <div id="wizard-loading"></div>
                 <div class="row mb--4">
-                    <div class="col-md-12 {!! (!setting('apps.api_key', null)) ?: 'hidden' !!}">
+                    {{-- <div class="col-md-12 {!! (!setting('apps.api_key', null)) ?: 'hidden' !!}">
                         <div class="form-group {{ $errors->has('api_key') ? 'has-error' : ''}}"
                             :class="[{'has-error': form.errors.get('api_key') }]">
                             {!! Form::label('api-key', trans('modules.api_key'), ['class' => 'form-control-label']) !!}
@@ -51,7 +51,7 @@
                         </p>
 
                         <br>
-                    </div>
+                    </div> --}}
 
                     {{ Form::textGroup('tax_number', trans('general.tax_number'), 'percent', []) }}
 

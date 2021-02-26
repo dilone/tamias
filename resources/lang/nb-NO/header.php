@@ -10,7 +10,7 @@ return [
         'upcoming_bills'    => '{1} :count kommende faktura [2,*] :count kommende fakturaer',
         'view_all'          => 'Vis alle'
     ],
-    'docs_link'             => 'https://akaunting.com/docs',
-    'support_link'          => 'https://akaunting.com/support',
+    'docs_link'             => 'https://cuatrokb.com/docs',
+    'support_link'          => 'https://cuatrokb.com/support',
 
 ];

@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Версия',
-    'powered'               => '© Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => '© CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Бесплатное Биллинговое ПО',
 
 ];

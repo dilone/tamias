@@ -10,7 +10,7 @@ return [
         'upcoming_bills'    => '{1} :count tagihan mendatang|[2,*] :count tagihan mendatang',
         'view_all'          => 'Tampilkan Semua'
     ],
-    'docs_link'             => 'https://akaunting.com/docs',
-    'support_link'          => 'https://akaunting.com/support',
+    'docs_link'             => 'https://cuatrokb.com/docs',
+    'support_link'          => 'https://cuatrokb.com/support',
 
 ];

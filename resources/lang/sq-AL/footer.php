@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versioni',
-    'powered'               => 'Mundësuar nga Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Mundësuar nga CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Program Kontabiliteti Falas',
 
 ];

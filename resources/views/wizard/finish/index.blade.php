@@ -13,7 +13,7 @@
                         <h3 class="text-white">{{ trans('modules.recommended_apps') }}</h3>
                     </div>
 
-                    @if ($modules)
+                    {{-- @if ($modules)
                         <div class="row">
                             @foreach ($modules->data as $module)
                                 @include('partials.modules.item')
@@ -30,7 +30,7 @@
                                 @endif
                             </ul>
                         </div>
-                    @else
+                    @else --}}
                         <div class="card">
                             <div class="card-body">
                                 <p class="col-md-12">
@@ -42,7 +42,7 @@
                                 </p>
                             </div>
                         </div>
-                    @endif
+                    {{-- @endif --}}
                 </div>
             </div>
         </div>

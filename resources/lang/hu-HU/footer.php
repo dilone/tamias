@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Verzió',
-    'powered'               => 'Powered By Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Powered By CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Ingyenes könyvelő program',
 
 ];

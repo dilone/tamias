@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versio',
-    'powered'               => 'Toteutettu ohjelmistolla Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Toteutettu ohjelmistolla CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Ilmainen kirjanpito-ohjelma',
 
 ];

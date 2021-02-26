@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versija',
-    'powered'               => 'Powered By Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Powered By CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Bezmaksas grāmatvedības programma',
 
 ];

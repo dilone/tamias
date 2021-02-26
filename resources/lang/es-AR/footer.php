@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versión',
-    'powered'               => 'Desarrollado por Akaunting',
-    'link'                  => 'https://akaunting.com',
-    'software'              => 'Software de Contabilidad Libre',
+    'powered'               => 'Desarrollado por CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
+    'software'              => 'Software de Facturación',
 
 ];

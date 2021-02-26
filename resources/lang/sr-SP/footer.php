@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Верзија',
-    'powered'               => 'Омогућио вам је Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Омогућио вам је CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Слободан рачуноводствени програм',
 
 ];

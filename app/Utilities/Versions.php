@@ -16,7 +16,7 @@ class Versions
     {
         $output = '';
 
-        $url = 'https://api.github.com/repos/akaunting/akaunting/releases';
+        $url = 'https://api.github.com/repos/cuatrokb/akaunting/releases';
 
         $http = new \GuzzleHttp\Client(['verify' => false]);
 

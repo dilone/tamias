@@ -4,7 +4,7 @@ return [
 
     'version'               => 'Wersja',
     'powered'               => 'Obsługiwany przez',
-    'link'                  => 'https://akaunting.com',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Darmowe oprogramowanie księgowe',
 
 ];

@@ -3,8 +3,8 @@
 return [
 
     'version'               => '版本',
-    'powered'               => 'Powered By Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Powered By CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => '免費會計軟體',
 
 ];

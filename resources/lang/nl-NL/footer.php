@@ -3,8 +3,8 @@
 return [
 
     'version'               => 'Versie',
-    'powered'               => 'Mogelijk gemaakt door Akaunting',
-    'link'                  => 'https://akaunting.com',
+    'powered'               => 'Mogelijk gemaakt door CuatroKB',
+    'link'                  => 'https://cuatrokb.com',
     'software'              => 'Gratis boekhoudsoftware',
 
 ];
