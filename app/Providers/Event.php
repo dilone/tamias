@@ -28,6 +28,13 @@ class Event extends Provider
             'App\Listeners\Update\V20\Version2024',
             'App\Listeners\Update\V21\Version210',
             'App\Listeners\Update\V21\Version213',
+            'App\Listeners\Update\V21\Version218',
+            'App\Listeners\Update\V21\Version219',
+            'App\Listeners\Update\V21\Version2112',
+            'App\Listeners\Update\V21\Version2114',
+            'App\Listeners\Update\V21\Version2116',
+            'App\Listeners\Update\V21\Version2117',
+            'App\Listeners\Update\V21\Version2118',
         ],
         'Illuminate\Auth\Events\Login' => [
             'App\Listeners\Auth\Login',
@@ -68,6 +75,9 @@ class Event extends Provider
         'App\Events\Document\DocumentViewed' => [
             'App\Listeners\Document\MarkDocumentViewed',
         ],
+        'App\Events\Install\UpdateFailed' => [
+            'App\Listeners\Update\SendNotificationOnFailure',
+        ],
         'App\Events\Menu\AdminCreated' => [
             'App\Listeners\Menu\AddAdminItems',
         ],
@@ -77,6 +87,9 @@ class Event extends Provider
         'App\Events\Module\Installed' => [
             'App\Listeners\Module\InstallExtraModules',
             'App\Listeners\Module\FinishInstallation',
+        ],
+        'App\Events\Module\Uninstalled' => [
+            'App\Listeners\Module\FinishUninstallation',
         ],
     ];
 

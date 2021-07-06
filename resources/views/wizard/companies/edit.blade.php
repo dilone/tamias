@@ -3,19 +3,8 @@
 @section('title', trans('general.wizard'))
 
 @section('content')
-    <div class="card">
-        {!! Form::model($company, [
-            'method' => 'PATCH',
-            'route' => ['wizard.companies.update'],
-            'id' => 'company',
-            '@submit.prevent' => 'onSubmit',
-            '@keydown' => 'form.errors.clear($event.target.name)',
-            'files' => true,
-            'role' => 'form',
-            'class' => 'form-loading-button mb-0',
-            'novalidate' => true
-        ]) !!}
 
+<<<<<<< HEAD
             <div id="wizard-loading"></div>
             @include('partials.wizard.steps')
 
@@ -79,8 +68,6 @@
 
         {!! Form::close() !!}
     </div>
+=======
+>>>>>>> 50d92909903446545210d03e9178a4b1e99fbba0
 @endsection
-
-@push('scripts_start')
-    <script src="{{ asset('public/js/wizard/company.js?v=' . version('short')) }}"></script>
-@endpush

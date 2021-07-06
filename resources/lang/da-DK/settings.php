@@ -16,6 +16,11 @@ return [
         'description'       => 'Indstil regnskabsår, tidszone, datoformat og lokalindstillinger',
         'financial_start'   => 'Regnskabsårets Start',
         'timezone'          => 'Tidszone',
+        'financial_denote' => [
+            'title'         => 'Regnskabets tilhørsår',
+            'begins'        => 'Det år, hvor det begynder',
+            'ends'          => 'Det år, hvor det ender',
+        ],
         'date' => [
             'format'        => 'Datoformat',
             'separator'     => 'Datoseparator',
@@ -58,7 +63,7 @@ return [
         'title'             => 'Titel',
         'subheading'        => 'Undertitel',
         'due_receipt'       => 'Forfalder ved modtagelse',
-        'due_days'          => 'Forfalder om :days dage',
+        'due_days'          => 'Forfalder efter :days dage',
         'choose_template'   => 'Vælg faktura skabelon',
         'default'           => 'Standard',
         'classic'           => 'Klassisk',
@@ -76,7 +81,7 @@ return [
         'description'       => 'Standard konto, valuta og sprog',
         'list_limit'        => 'Poster pr side',
         'use_gravatar'      => 'Brug standard-ikoner (Gravatar)',
-        'income_category'   => 'Indkomstkategori',
+        'income_category'   => 'Indtægtskategori',
         'expense_category'  => 'Udgiftskategori',
     ],
 
@@ -104,12 +109,13 @@ return [
             'invoice_new_customer'      => 'Skabelon til ny faktura (sendt til kunder)',
             'invoice_remind_customer'   => 'Fakturapåmindelses-skabelon (sendt til kunder)',
             'invoice_remind_admin'      => 'Fakturapåmindelses-skabelon (sendt til administrator)',
-            'invoice_recur_customer'    => 'Tilbagevendende skabelon for faktura (sendt til kunde)',
+            'invoice_recur_customer'    => 'Skabelon for tilbagevendende faktura (sendt til kunde)',
             'invoice_recur_admin'       => 'Skabelon for tilbagevendende faktura (sendt til administrator)',
             'invoice_payment_customer'  => 'Skabelon for modtaget betaling (sendt til kunder)',
             'invoice_payment_admin'     => 'Skabelon for modtaget betaling (sendt til administrator)',
             'bill_remind_admin'         => 'Skabelon for regningspåmindelse (sendt til administrator)',
-            'bill_recur_admin'          => 'Tilbagevendende skabelon for regning (sendt til administrator)',
+            'bill_recur_admin'          => 'Skabelon for tilbagevendende regning (sendt til administrator)',
+            'revenue_new_customer'      => 'Skabelon for modtaget betaling (sendt til kunder)',
         ],
     ],
 
@@ -125,7 +131,7 @@ return [
     ],
 
     'categories' => [
-        'description'       => 'Ubegrænsede kategorier for indtægt, udgift og varer',
+        'description'       => 'Ubegrænsede kategorier for indtægter, udgifter og varer',
     ],
 
     'currencies' => [

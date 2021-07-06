@@ -3,18 +3,24 @@
 return [
 
     'company' => [
-        'description'       => 'Ändra företagsnamn, e-postadress, adress, skattenummer etc',
-        'name'              => 'Namn',
-        'email'             => 'E-post',
-        'phone'             => 'Telefon',
-        'address'           => 'Adress',
-        'logo'              => 'Logotyp',
+        'description'                => 'Ändra företagsnamn, e-postadress, adress, skattenummer etc',
+        'name'                       => 'Namn',
+        'email'                      => 'E-post',
+        'phone'                      => 'Telefon',
+        'address'                    => 'Adress',
+        'edit_your_business_address' => 'Redigera din företagsadress',
+        'logo'                       => 'Logotyp',
     ],
 
     'localisation' => [
         'description'       => 'Ställ in räkenskapsår, tidszon, datumformat och andra lokala inställningar',
         'financial_start'   => 'Räkenskapsår',
         'timezone'          => 'Tidszon',
+        'financial_denote' => [
+            'title'         => 'Räkenskapsårets Beteckning',
+            'begins'        => 'Efter startår',
+            'ends'          => 'Efter slutår',
+        ],
         'date' => [
             'format'        => 'Datumformat',
             'separator'     => 'Datumavgränsare',
@@ -110,6 +116,7 @@ Mottagning av betalning (skickad till kund)',
             'invoice_payment_admin'     => 'Mottagning av betalning (skickad till admin)',
             'bill_remind_admin'         => 'Faktura påminnelsemall (skickad till admin)',
             'bill_recur_admin'          => 'Räkning återkommande mall (skickad till admin)',
+            'revenue_new_customer'      => 'Intäkter mottagen mall (skickas till kunden)',
         ],
     ],
 

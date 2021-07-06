@@ -3,6 +3,7 @@
 namespace App\Notifications\Purchase;
 
 use App\Abstracts\Notification;
+use App\Models\Common\EmailTemplate;
 
 class Bill extends Notification
 {
@@ -24,14 +25,14 @@ class Bill extends Notification
      * Create a notification instance.
      *
      * @param  object  $bill
-     * @param  object  $template
+     * @param  object  $template_alias
      */
-    public function __construct($bill = null, $template = null)
+    public function __construct($bill = null, $template_alias = null)
     {
         parent::__construct();
 
         $this->bill = $bill;
-        $this->template = $template;
+        $this->template = EmailTemplate::alias($template_alias)->first();
     }
 
     /**
@@ -56,8 +57,14 @@ class Bill extends Notification
     public function toArray($notifiable)
     {
         return [
+            'template_alias' => $this->template->alias,
             'bill_id' => $this->bill->id,
+            'bill_number' => $this->bill->document_number,
+            'vendor_name' => $this->bill->contact_name,
             'amount' => $this->bill->amount,
+            'billed_date' => company_date($this->bill->issued_at),
+            'bill_due_date' => company_date($this->bill->due_at),
+            'status' => $this->bill->status,
         ];
     }
 
@@ -67,6 +74,7 @@ class Bill extends Notification
             '{bill_number}',
             '{bill_total}',
             '{bill_amount_due}',
+            '{billed_date}',
             '{bill_due_date}',
             '{bill_admin_link}',
             '{vendor_name}',

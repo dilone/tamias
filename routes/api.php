@@ -13,7 +13,7 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v3', ['middleware' => ['api']], function($api) {
     $api->group(['as' => 'api', 'namespace' => 'App\Http\Controllers\Api'], function($api) {
         // Companies
-        $api->get('companies/{company}/owner', 'Common\Companies@owner')->name('.companies.owner');
+        $api->get('companies/{company}/owner', 'Common\Companies@canAccess')->name('.companies.owner');
         $api->get('companies/{company}/enable', 'Common\Companies@enable')->name('.companies.enable');
         $api->get('companies/{company}/disable', 'Common\Companies@disable')->name('.companies.disable');
         $api->resource('companies', 'Common\Companies');
@@ -48,6 +48,10 @@ $api->version('v3', ['middleware' => ['api']], function($api) {
 
         // Reports
         $api->resource('reports', 'Common\Reports');
+
+        // Translations
+        $api->get('translations/{locale}/all', 'Common\Translations@all')->name('.translations.all');
+        $api->get('translations/{locale}/{file}', 'Common\Translations@file')->name('.translations.file');
 
         // Settings
         $api->get('categories/{category}/enable', 'Settings\Categories@enable')->name('.categories.enable');

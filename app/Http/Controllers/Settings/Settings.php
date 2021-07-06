@@ -20,6 +20,8 @@ class Settings extends Controller
 
     public $file_keys = ['company.logo', 'invoice.logo'];
 
+    public $uploaded_file_keys = ['company.uploaded_logo', 'invoice.uploaded_logo'];
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -80,7 +82,7 @@ class Settings extends Controller
         $company_id = $request->get('company_id');
 
         if (empty($company_id)) {
-            $company_id = session('company_id');
+            $company_id = company_id();
         }
 
         $company = Company::find($company_id);
@@ -92,6 +94,11 @@ class Settings extends Controller
 
             // Don't process unwanted keys
             if (in_array($key, $this->skip_keys)) {
+                continue;
+            }
+
+            // change dropzone middleware already uploaded file
+            if (in_array($real_key, $this->uploaded_file_keys)) {
                 continue;
             }
 
@@ -113,6 +120,10 @@ class Settings extends Controller
             }
 
             if ($real_key == 'default.locale') {
+                if (!in_array($value, config('language.allowed'))) {
+                    continue;
+                }
+
                 user()->setAttribute('locale', $value)->save();
             }
 
@@ -156,10 +167,10 @@ class Settings extends Controller
                 Installer::updateEnv(['MAIL_FROM_NAME' => '"' . $value . '"']);
                 break;
             case 'company.email':
-                Installer::updateEnv(['MAIL_FROM_ADDRESS' => $value]);
+                Installer::updateEnv(['MAIL_FROM_ADDRESS' => '"' . $value . '"']);
                 break;
             case 'default.locale':
-                Installer::updateEnv(['APP_LOCALE' => $value]);
+                Installer::updateEnv(['APP_LOCALE' => '"' . $value . '"']);
                 break;
             case 'schedule.time':
                 Installer::updateEnv(['APP_SCHEDULE_TIME' => '"' . $value . '"']);

@@ -21,6 +21,7 @@ class CreateTransaction extends Job
     public function __construct($request)
     {
         $this->request = $this->getRequestInstance($request);
+        $this->request->merge(['created_by' => user_id()]);
     }
 
     /**
@@ -45,7 +46,7 @@ class CreateTransaction extends Job
             }
 
             // Recurring
-            $this->transaction->createRecurring();
+            $this->transaction->createRecurring($this->request->all());
         });
 
         event(new TransactionCreated($this->transaction));

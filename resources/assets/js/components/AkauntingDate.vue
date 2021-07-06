@@ -4,17 +4,21 @@
         :class="[
             {'readonly': readonly},
             {'disabled': disabled},
+            {'hidden-year': hiddenYear},
+            {'data-value-min': dataValueMin},
             formClasses
         ]"
         :footer-error="formError"
         :prependIcon="icon"
         :readonly="readonly"
         :disabled="disabled"
+        @focus="focus"
         >
         <flat-picker slot-scope="{focus, blur}"
+            :name="dataName"
             @on-open="focus"
             @on-close="blur"
-            :config="config"
+            :config="dateConfig"
             class="form-control datepicker"
             v-model="real_model"
             @input="change"
@@ -37,6 +41,11 @@ export default {
 
     props: {
         title: {
+            type: String,
+            default: '',
+            description: "Modal header title"
+        },
+        dataName: {
             type: String,
             default: '',
             description: "Modal header title"
@@ -67,7 +76,19 @@ export default {
             default: null,
             description: "Input model defalut"
         },
-        config: null,
+        dateConfig: {
+            type: Object,
+            default: function () {
+                return {
+                    allowInput: true,
+                    altFormat: "d M Y",
+                    altInput: true,
+                    dateFormat: "Y-m-d",
+                    wrap: true,
+                };
+            },
+            description: "FlatPckr date configuration"
+        },
         icon: {
             type: String,
             description: "Prepend icon (left)"
@@ -75,12 +96,18 @@ export default {
         locale: {
             type: String,
             default: 'en',
+        },
+        hiddenYear: {
+            type: [Boolean, String]
+        },
+        dataValueMin: {
+            type: [Boolean, String, Date]
         }
     },
 
     data() {
         return {
-            real_model: this.model,
+            real_model: '',
         }
     },
     
@@ -88,7 +115,7 @@ export default {
         if (this.locale !== 'en') {
             const lang = require(`flatpickr/dist/l10n/${this.locale}.js`).default[this.locale];
 
-            this.config.locale = lang;
+            this.dateConfig.locale = lang;
         }
     },
 
@@ -107,7 +134,36 @@ export default {
             this.$emit('interface', this.real_model);
             
             this.$emit('change', this.real_model);
+        },
+
+        focus() {
+            let date_wrapper_html = document.querySelectorAll('.numInputWrapper');
+            if(this.hiddenYear) {
+                date_wrapper_html.forEach((wrapper) => {
+                    wrapper.classList.add('hidden-year-flatpickr');
+                });
+            } else {
+                date_wrapper_html.forEach((wrapper) => {
+                    wrapper.classList.remove('hidden-year-flatpickr');
+                });
+            }
         }
+    },
+
+    watch: {
+        value: function(val) {
+            this.real_model = val;
+        },
+
+        dataValueMin: function(val) {
+            this.dateConfig.minDate = val;
+        },
     }
 }
 </script>
+
+<style>
+    .hidden-year-flatpickr {
+        display: none !important;
+    }
+</style>

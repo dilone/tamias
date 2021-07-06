@@ -3,6 +3,7 @@
 @section('title', trans('general.wizard'))
 
 @section('content')
+<<<<<<< HEAD
     <div class="card">
         @include('partials.wizard.steps')
 
@@ -63,8 +64,7 @@
             </div>
         </div>
     </div>
+=======
+ 
+>>>>>>> 50d92909903446545210d03e9178a4b1e99fbba0
 @endsection
-
-@push('scripts_start')
-    <script src="{{ asset('public/js/wizard/finish.js?v=' . version('short')) }}"></script>
-@endpush

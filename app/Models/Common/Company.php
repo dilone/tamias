@@ -2,31 +2,38 @@
 
 namespace App\Models\Common;
 
+use App\Events\Common\CompanyForgettingCurrent;
+use App\Events\Common\CompanyForgotCurrent;
+use App\Events\Common\CompanyMadeCurrent;
+use App\Events\Common\CompanyMakingCurrent;
 use App\Models\Document\Document;
 use App\Traits\Contacts;
 use App\Traits\Media;
+use App\Traits\Owners;
 use App\Traits\Tenants;
 use App\Traits\Transactions;
+use App\Utilities\Overrider;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
+use Laratrust\Contracts\Ownable;
 use Lorisleiva\LaravelSearchString\Concerns\SearchString;
 
-class Company extends Eloquent
+class Company extends Eloquent implements Ownable
 {
-    use Contacts, Media, SearchString, SoftDeletes, Sortable, Tenants, Transactions;
+    use Contacts, Media, Owners, SearchString, SoftDeletes, Sortable, Tenants, Transactions;
 
     protected $table = 'companies';
 
-    protected $tenantable = false;
-
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['domain', 'enabled'];
+    protected $fillable = ['domain', 'enabled', 'created_by'];
 
     protected $casts = [
         'enabled' => 'boolean',
     ];
+
+    public $allAttributes = [];
 
     /**
      * Sortable columns.
@@ -35,16 +42,43 @@ class Company extends Eloquent
      */
     public $sortable = ['name', 'domain', 'email', 'enabled', 'created_at'];
 
+    /**
+     * Create a new Eloquent model instance.
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->allAttributes = $attributes;
+
+        parent::__construct($attributes);
+    }
+
+    /**
+     * Update the model in the database.
+     *
+     * @param  array  $attributes
+     * @param  array  $options
+     * @return bool
+     */
+    public function update(array $attributes = [], array $options = [])
+    {
+        $this->allAttributes = $attributes;
+
+        return parent::update($attributes, $options);
+    }
+
     public static function boot()
     {
         parent::boot();
 
         static::retrieved(function($model) {
-            $model->setSettings();
+            $model->setCommonSettingsAsAttributes();
         });
 
         static::saving(function($model) {
-            $model->unsetSettings();
+            $model->unsetCommonSettingsFromAttributes();
         });
     }
 
@@ -183,6 +217,11 @@ class Company extends Eloquent
         return $this->hasMany('App\Models\Module\ModuleHistory');
     }
 
+    public function owner()
+    {
+        return $this->belongsTo('App\Models\Auth\User', 'id', 'created_by');
+    }
+
     public function reconciliations()
     {
         return $this->hasMany('App\Models\Banking\Reconciliation');
@@ -233,7 +272,7 @@ class Company extends Eloquent
         return $this->hasMany('App\Models\Common\Widget');
     }
 
-    public function setSettings()
+    public function setCommonSettingsAsAttributes()
     {
         $settings = $this->settings;
 
@@ -265,7 +304,7 @@ class Company extends Eloquent
         }
     }
 
-    public function unsetSettings()
+    public function unsetCommonSettingsFromAttributes()
     {
         $settings = $this->settings;
 
@@ -302,13 +341,13 @@ class Company extends Eloquent
 
         $search = $request->get('search');
 
-        $query = user()->companies()->usingSearchString($search)->sortable($sort);
+        $query->usingSearchString($search)->sortable($sort);
 
-        if ($request->expectsJson()) {
+        if ($request->expectsJson() && $request->isNotApi()) {
             return $query->get();
         }
 
-        $limit = $request->get('limit', setting('default.list_limit', '25'));
+        $limit = (int) $request->get('limit', setting('default.list_limit', '25'));
 
         return $query->paginate($limit);
     }
@@ -405,5 +444,102 @@ class Company extends Eloquent
     public function getCompanyLogoAttribute()
     {
         return $this->getMedia('company_logo')->last();
+    }
+
+    public function makeCurrent($force = false)
+    {
+        if (!$force && $this->isCurrent()) {
+            return $this;
+        }
+
+        static::forgetCurrent();
+
+        event(new CompanyMakingCurrent($this));
+
+        // Bind to container
+        app()->instance(static::class, $this);
+
+        // Set session for backward compatibility @deprecated
+        //session(['company_id' => $this->id]);
+
+        // Load settings
+        setting()->setExtraColumns(['company_id' => $this->id]);
+        setting()->forgetAll();
+        setting()->load(true);
+
+        // Override settings and currencies
+        Overrider::load('settings');
+        Overrider::load('currencies');
+
+        event(new CompanyMadeCurrent($this));
+
+        return $this;
+    }
+
+    public function isCurrent()
+    {
+        return optional(static::getCurrent())->id === $this->id;
+    }
+
+    public function isNotCurrent()
+    {
+        return !$this->isCurrent();
+    }
+
+    public static function getCurrent()
+    {
+        if (!app()->has(static::class)) {
+            return null;
+        }
+
+        return app(static::class);
+    }
+
+    public static function forgetCurrent()
+    {
+        $current = static::getCurrent();
+
+        if (is_null($current)) {
+            return null;
+        }
+
+        event(new CompanyForgettingCurrent($current));
+
+        // Remove from container
+        app()->forgetInstance(static::class);
+
+        // Unset session for backward compatibility @deprecated
+        //session()->forget('company_id');
+
+        // Remove settings
+        setting()->forgetAll();
+
+        event(new CompanyForgotCurrent($current));
+
+        return $current;
+    }
+
+    public static function hasCurrent()
+    {
+        return static::getCurrent() !== null;
+    }
+
+    public function scopeIsOwner($query)
+    {
+        return $query->where('created_by', user_id());
+    }
+
+    public function scopeIsNotOwner($query)
+    {
+        return $query->where('created_by', '<>', user_id());
+    }
+
+    public function ownerKey($owner)
+    {
+        if ($this->isNotOwnable()) {
+            return 0;
+        }
+
+        return $this->created_by;
     }
 }

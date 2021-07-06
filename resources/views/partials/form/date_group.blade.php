@@ -8,7 +8,6 @@
         @else
         :form-classes="[{'has-error': form.errors.get('{{ $name }}') }]"
         @endif
-
         :group_class="'{{ $group_class }}'"
 
         icon="fa fa-{{ $icon }}"
@@ -24,20 +23,21 @@
         :model="{{ $attributes['model'] }}"
         @endif
 
-        :config="{
-            allowInput: true,
+        :date-config="{
+            wrap: true, // set wrap to true only when using 'input-group'
+            allowInput: false,
             @if (!empty($attributes['show-date-format']))
             altInput: true,
             altFormat: '{{ $attributes['show-date-format'] }}',
             @endif
             @if (!empty($attributes['date-format']))
-            dateFormat: '{{ $attributes['date-format'] }}'
+            dateFormat: '{{ $attributes['date-format'] }}',
             @endif
             @if (!empty($attributes['min-date']))
-            minDate: {{ $attributes['min-date'] }}
+            minDate: {{ $attributes['min-date'] }},
             @endif
             @if (!empty($attributes['max-date']))
-            maxDate: {{ $attributes['max-date'] }}
+            maxDate: {{ $attributes['max-date'] }},
             @endif
         }"
 
@@ -49,6 +49,14 @@
         @interface="form.errors.clear('{{ 'form.' . $attributes['data-field'] . '.' . $name }}'); {{ 'form.' . $attributes['data-field'] . '.' . $name . ' = $event' }}"
         @else
         @interface="form.errors.clear('{{ $name }}'); form.{{ $name }} = $event"
+        @endif
+
+        @if (!empty($attributes['hidden_year']))
+        hidden-year
+        @endif
+
+        @if (!empty($attributes['min-date-dynamic']))
+        :data-value-min="{{ $attributes['min-date-dynamic'] }}"
         @endif
 
         @if (!empty($attributes['change']))

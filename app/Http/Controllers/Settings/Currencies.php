@@ -58,11 +58,11 @@ class Currencies extends Controller
         }
 
         $precisions = (object) [
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            3 => 3,
-            4 => 4,
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
         ];
 
         return view('settings.currencies.create', compact('codes', 'precisions'));
@@ -125,11 +125,11 @@ class Currencies extends Controller
         $currency->default_currency = ($currency->code == setting('default.currency')) ? 1 : 0;
 
         $precisions = (object) [
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            3 => 3,
-            4 => 4,
+            '0' => '0',
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
         ];
 
         return view('settings.currencies.edit', compact('currency', 'codes', 'precisions'));
@@ -224,25 +224,6 @@ class Currencies extends Controller
         }
 
         return response()->json($response);
-    }
-
-    public function currency()
-    {
-        $json = new \stdClass();
-
-        $code = request('code');
-
-        if ($code) {
-            // Get currency object
-            $currency = Currency::where('code', $code)->first();
-
-            // it should be integer for amount mask
-            $currency->precision = (int) $currency->precision;
-
-            $json = (object) $currency;
-        }
-
-        return response()->json($json);
     }
 
     public function config()

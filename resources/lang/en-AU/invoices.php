@@ -4,6 +4,7 @@ return [
 
     'invoice_number'        => 'Invoice Number',
     'invoice_date'          => 'Invoice Date',
+    'invoice_amount'        => 'Invoice Amount',
     'total_price'           => 'Total Price',
     'due_date'              => 'Due Date',
     'order_number'          => 'Order Number',
@@ -42,7 +43,7 @@ return [
 
     'messages' => [
         'email_required'    => 'No email address for this customer!',
-        'draft'             => 'This is a <b>DRAFT</b> invoice and will be reflected to charts after it gets sent.',
+        'draft'             => 'This is a <b>DRAFT</b> invoice and will be reflected in charts after it is sent.',
 
         'status' => [
             'created'       => 'Created on :date',
