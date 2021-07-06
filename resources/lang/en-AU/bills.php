@@ -4,6 +4,7 @@ return [
 
     'bill_number'           => 'Bill Number',
     'bill_date'             => 'Bill Date',
+    'bill_amount'           => 'Bill Amount',
     'total_price'           => 'Total Price',
     'due_date'              => 'Due Date',
     'order_number'          => 'Order Number',
@@ -39,7 +40,7 @@ return [
     'make_payment'          => 'Make Payment',
 
     'messages' => [
-        'draft'             => 'This is a <b>DRAFT</b> bill and will be reflected to charts after it gets received.',
+        'draft'             => 'This is a <b>DRAFT</b> bill and will be reflected in charts after it is received.',
 
         'status' => [
             'created'       => 'Created on :date',

@@ -16,7 +16,8 @@ use App\Traits\Charts;
 use App\Traits\DateTime;
 use App\Traits\SearchString;
 use App\Utilities\Chartjs;
-use Date;
+use App\Utilities\Date;
+use App\Utilities\Export as ExportHelper;
 use Illuminate\Support\Str;
 
 abstract class Report
@@ -141,7 +142,7 @@ abstract class Report
                 $sum += is_array($total) ? array_sum($total) : $total;
             }
 
-            $total = money($sum, setting('default.currency'), true);
+            $total = money($sum, setting('default.currency'), true)->format();
         } else {
             $total = trans('general.na');
         }
@@ -205,7 +206,7 @@ abstract class Report
 
     public function export()
     {
-        return \Excel::download(new Export($this->views['content'], $this), \Str::filename($this->model->name) . '.xlsx');
+        return ExportHelper::toExcel(new Export($this->views['content'], $this), $this->model->name);
     }
 
     public function setColumnWidth()
@@ -369,15 +370,17 @@ abstract class Report
 
     public function getFormattedDate($date)
     {
+        $formatted_date = null;
+
         switch ($this->getSetting('period')) {
             case 'yearly':
                 $financial_year = $this->getFinancialYear($this->year);
 
                 if ($date->greaterThanOrEqualTo($financial_year->getStartDate()) && $date->lessThanOrEqualTo($financial_year->getEndDate())) {
                     if (setting('localisation.financial_denote') == 'begins') {
-                        $i = $financial_year->getStartDate()->copy()->format($this->getYearlyDateFormat());
+                        $formatted_date = $financial_year->getStartDate()->copy()->format($this->getYearlyDateFormat());
                     } else {
-                        $i = $financial_year->getEndDate()->copy()->format($this->getYearlyDateFormat());
+                        $formatted_date = $financial_year->getEndDate()->copy()->format($this->getYearlyDateFormat());
                     }
                 }
 
@@ -392,23 +395,23 @@ abstract class Report
 
                     $start = $quarter->getStartDate()->format($this->getQuarterlyDateFormat($this->year));
                     $end = $quarter->getEndDate()->format($this->getQuarterlyDateFormat($this->year));
-                }
 
-                $i = $start . '-' . $end;
+                    $formatted_date = $start . '-' . $end;
+                }
 
                 break;
             default:
-                $i = $date->copy()->format($this->getMonthlyDateFormat($this->year));
+                $formatted_date = $date->copy()->format($this->getMonthlyDateFormat($this->year));
 
                 break;
         }
 
-        return $i;
+        return $formatted_date;
     }
 
     public function getUrl($action = 'print')
     {
-        $url = 'common/reports/' . $this->model->id . '/' . $action;
+        $url = company_id() . '/common/reports/' . $this->model->id . '/' . $action;
 
         $search = request('search');
 

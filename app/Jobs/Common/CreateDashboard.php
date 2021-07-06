@@ -4,6 +4,7 @@ namespace App\Jobs\Common;
 
 use App\Abstracts\Job;
 use App\Models\Auth\User;
+use App\Models\Common\Company;
 use App\Models\Common\Dashboard;
 use App\Models\Common\Widget;
 use App\Utilities\Widgets;
@@ -23,6 +24,7 @@ class CreateDashboard extends Job
     public function __construct($request)
     {
         $this->request = $this->getRequestInstance($request);
+        $this->request->merge(['created_by' => user_id()]);
     }
 
     /**
@@ -55,7 +57,15 @@ class CreateDashboard extends Job
     {
         $list = [];
 
-        if ($this->request->has('users')) {
+        if ($this->request->has('all_users')) {
+            Company::find($this->request->get('company_id'))->users()->each(function ($user) use (&$list) {
+                if (!$this->shouldCreateDashboardFor($user)) {
+                    return;
+                }
+
+                $list[] = $user->id;
+            });
+        } elseif ($this->request->has('users')) {
             $user_ids = Arr::wrap($this->request->get('users'));
 
             foreach($user_ids as $user_id) {
@@ -97,7 +107,7 @@ class CreateDashboard extends Job
         $sort = 1;
 
         if ($this->request->has('default_widgets')) {
-            $widgets = Widgets::getClasses(false);
+            $widgets = Widgets::getClasses($this->request->get('default_widgets'), false);
 
             $this->createWidgets($widgets, $sort);
         }
@@ -118,10 +128,11 @@ class CreateDashboard extends Job
                 $name = (new $class())->getDefaultName();
             }
 
-            Widget::create([
+            Widget::firstOrCreate([
                 'company_id' => $this->dashboard->company_id,
                 'dashboard_id' => $this->dashboard->id,
                 'class' => $class,
+            ], [
                 'name' => $name,
                 'sort' => $sort,
                 'settings' => (new $class())->getDefaultSettings(),

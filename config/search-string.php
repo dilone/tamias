@@ -40,6 +40,7 @@ return [
 
     App\Models\Auth\Permission::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'display_name' => ['searchable' => true],
             'description' => ['searchable' => true],
@@ -48,6 +49,7 @@ return [
 
     App\Models\Auth\Role::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'display_name' => ['searchable' => true],
             'description' => ['searchable' => true],
@@ -56,6 +58,7 @@ return [
 
     App\Models\Auth\User::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'email' => ['searchable' => true],
             'enabled' => ['boolean' => true],
@@ -65,6 +68,7 @@ return [
 
     App\Models\Banking\Account::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'number' => ['searchable' => true],
             'bank_name' => ['searchable' => true],
@@ -78,6 +82,7 @@ return [
 
     App\Models\Banking\Reconciliation::class => [
         'columns' => [
+            'id',
             'account' => ['relationship' => true],
             'closing_balance',
             'reconciled' => ['boolean' => true],
@@ -88,6 +93,7 @@ return [
 
     App\Models\Banking\Transaction::class => [
         'columns' => [
+            'id',
             'type',
             'account_id' => [
                 'route' => 'accounts.index'
@@ -111,6 +117,7 @@ return [
 
     App\Models\Banking\Transfer::class => [
         'columns' => [
+            'id',
             'expense_account' => [
                 'relationship' => true,
                 'route' => 'accounts.index',
@@ -124,6 +131,7 @@ return [
 
     App\Models\Common\Company::class => [
         'columns' => [
+            'id',
             'domain' => ['searchable' => true],
             'settings.value' => ['searchable' => true],
             'enabled' => ['boolean' => true],
@@ -132,6 +140,7 @@ return [
 
     App\Models\Common\Dashboard::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'enabled' => ['boolean' => true],
         ],
@@ -139,6 +148,7 @@ return [
 
     App\Models\Common\Item::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'description' => ['searchable' => true],
             'enabled' => ['boolean' => true],
@@ -152,6 +162,7 @@ return [
 
     App\Models\Common\Contact::class => [
         'columns' => [
+            'id',
             'type',
             'name' => ['searchable' => true],
             'email' => ['searchable' => true],
@@ -170,6 +181,7 @@ return [
 
     App\Models\Document\Document::class => [
         'columns' => [
+            'id',
             'type' => ['searchable' => true],
             'document_number' => ['searchable' => true],
             'order_number' => ['searchable' => true],
@@ -198,9 +210,18 @@ return [
 
     'App\Models\Purchase\Bill' => [
         'columns' => [
+            'id',
             'document_number' => ['searchable' => true],
             'order_number' => ['searchable' => true],
-            'status',
+            'status' => [
+                'values' => [
+                    'paid' => 'documents.statuses.paid',
+                    'partial' => 'documents.statuses.partial',
+                    'received' => 'documents.statuses.received',
+                    'cancelled' => 'documents.statuses.cancelled',
+                    'draft' => 'documents.statuses.draft',
+                ],
+            ],
             'issued_at' => [
                 'key' => 'billed_at',
                 'date' => true,
@@ -227,6 +248,7 @@ return [
 
     'App\Models\Purchase\Payment' => [
         'columns' => [
+            'id',
             'type',
             'account_id' => [
                 'route' => 'accounts.index'
@@ -252,9 +274,19 @@ return [
 
     'App\Models\Sale\Invoice' => [
         'columns' => [
+            'id',
             'document_number' => ['searchable' => true],
             'order_number' => ['searchable' => true],
-            'status',
+            'status' => [
+                'values' => [
+                    'paid' => 'documents.statuses.paid',
+                    'partial' => 'documents.statuses.partial',
+                    'sent' => 'documents.statuses.sent',
+                    'viewed' => 'documents.statuses.viewed',
+                    'cancelled' => 'documents.statuses.cancelled',
+                    'draft' => 'documents.statuses.draft',
+                ]
+            ],
             'issued_at' => [
                 'key' => 'invoiced_at',
                 'date' => true,
@@ -281,6 +313,7 @@ return [
 
     'App\Models\Sale\Revenue' => [
         'columns' => [
+            'id',
             'type',
             'account_id' => [
                 'route' => 'accounts.index'
@@ -306,6 +339,7 @@ return [
 
     App\Models\Setting\Category::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'enabled' => ['boolean' => true],
             'type',
@@ -314,6 +348,7 @@ return [
 
     App\Models\Setting\Currency::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'code' => ['searchable' => true],
             'rate' => ['searchable' => true],
@@ -334,6 +369,7 @@ return [
 
     App\Models\Setting\Tax::class => [
         'columns' => [
+            'id',
             'name' => ['searchable' => true],
             'type',
             'rate',
@@ -343,6 +379,7 @@ return [
 
     App\Models\Portal\Sale\Invoice::class => [
         'columns' => [
+            'id',
             'document_number' => ['searchable' => true],
             'order_number' => ['searchable' => true],
             'status',
@@ -361,6 +398,7 @@ return [
 
     App\Models\Portal\Banking\Transaction::class => [
         'columns' => [
+            'id',
             'paid_at' => ['date' => true],
             'amount',
             'currency_code' => [

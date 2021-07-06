@@ -4,6 +4,7 @@ return [
 
     'bill_number'           => 'Bill Number',
     'bill_date'             => 'Bill Date',
+    'bill_amount'           => 'Bill Amount',
     'total_price'           => 'Total Price',
     'due_date'              => 'Due Date',
     'order_number'          => 'Order Number',
@@ -44,7 +45,7 @@ return [
         'status' => [
             'created'       => 'Created on :date',
             'receive' => [
-                'draft'     => 'Not sent',
+                'draft'     => 'Not received',
                 'received'  => 'Received on :date',
             ],
             'paid' => [

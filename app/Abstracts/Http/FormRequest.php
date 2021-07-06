@@ -15,7 +15,7 @@ abstract class FormRequest extends BaseFormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'company_id' => session('company_id'),
+            'company_id' => company_id(),
         ]);
     }
 
@@ -31,5 +31,15 @@ abstract class FormRequest extends BaseFormRequest
             $this->route() ? $this->all() + $this->route()->parameters() : $this->all(),
             $offset
         );
+    }
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
     }
 }

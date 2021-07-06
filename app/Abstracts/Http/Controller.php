@@ -6,18 +6,14 @@ use App\Abstracts\Http\Response;
 use App\Traits\Jobs;
 use App\Traits\Permissions;
 use App\Traits\Relationships;
-use Exception;
-use ErrorException;
+use App\Utilities\Export;
+use App\Utilities\Import;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Str;
-use Maatwebsite\Excel\Exceptions\SheetNotFoundException;
-use Maatwebsite\Excel\Facades\Excel;
-use Throwable;
 
 abstract class Controller extends BaseController
 {
@@ -43,7 +39,7 @@ abstract class Controller extends BaseController
      */
     public function paginate($items, $perPage = 15, $page = null, $options = [])
     {
-        $perPage = $perPage ?: request('limit', setting('default.list_limit', '25'));
+        $perPage = $perPage ?: (int) request('limit', setting('default.list_limit', '25'));
 
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
 
@@ -78,51 +74,26 @@ abstract class Controller extends BaseController
      *
      * @param $class
      * @param $request
-     * @param $url
+     * @param $translation
      *
-     * @return mixed
+     * @return array
      */
-    public function importExcel($class, $request)
+    public function importExcel($class, $request, $translation)
     {
-        try {
-            Excel::import($class, $request->file('import'));
-
-            $response = [
-                'success'   => true,
-                'error'     => false,
-                'data'      => null,
-                'message'   => '',
-            ];
-        } catch (SheetNotFoundException | ErrorException | Exception | Throwable $e) {
-            $message = $e->getMessage();
-
-            $response = [
-                'success'   => false,
-                'error'     => true,
-                'data'      => null,
-                'message'   => $message,
-            ];
-        }
-
-        return $response;
+        return Import::fromExcel($class, $request, $translation);
     }
 
     /**
      * Export the excel file or catch errors
      *
      * @param $class
-     * @param $file_name
+     * @param $translation
+     * @param $extension
      *
      * @return mixed
      */
-    public function exportExcel($class, $file_name, $extension = 'xlsx')
+    public function exportExcel($class, $translation, $extension = 'xlsx')
     {
-        try {
-            return Excel::download($class, Str::filename($file_name) . '.' . $extension);
-        } catch (ErrorException | Exception | Throwable $e) {
-            flash($e->getMessage())->error()->important();
-
-            return back();
-        }
+        return Export::toExcel($class, $translation, $extension);
     }
 }

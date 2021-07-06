@@ -25,9 +25,9 @@ class Logo
         $media = Media::find(setting('company.logo'));
 
         if (!empty($media)) {
-            $path = Storage::path($media->getDiskPath());
+            $path = $media->getDiskPath();
 
-            if (!is_file($path)) {
+            if (Storage::missing($path)) {
                 return $logo;
             }
         } else {
@@ -35,14 +35,18 @@ class Logo
         }
 
         try {
-            $image = Image::cache(function($image) use ($path) {
+            $image = Image::cache(function($image) use ($media, $path) {
                 $width = setting('invoice.logo_size_width');
                 $height = setting('invoice.logo_size_height');
 
-                $image->make($path)->resize($width, $height)->encode();
+                if ($media) {
+                    $image->make(Storage::get($path))->resize($width, $height)->encode();
+                } else {
+                    $image->make($path)->resize($width, $height)->encode();
+                }
             });
         } catch (NotReadableException | \Exception $e) {
-            Log::info('Company ID: ' . session('company_id') . ' viewcomposer/logo.php exception.');
+            Log::info('Company ID: ' . company_id() . ' viewcomposer/logo.php exception.');
             Log::info($e->getMessage());
 
             $path = base_path('public/img/company.png');

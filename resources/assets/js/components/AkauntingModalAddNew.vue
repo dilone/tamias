@@ -59,11 +59,13 @@ import AkauntingModal from './AkauntingModal';
 import AkauntingMoney from './AkauntingMoney';
 import AkauntingRadioGroup from './forms/AkauntingRadioGroup';
 import AkauntingSelect from './AkauntingSelect';
+import AkauntingSelectRemote from './AkauntingSelectRemote';
 import AkauntingDate from './AkauntingDate';
 import AkauntingRecurring from './AkauntingRecurring';
 
 import Form from './../plugins/form';
 import { Alert, ColorPicker } from 'element-ui';
+import Global from './../mixins/global';
 
 export default {
     name: 'akaunting-modal-add-new',
@@ -137,10 +139,10 @@ export default {
         };
     },
 
-    created: function () {	
-        let documentClasses = document.body.classList;	
+    created: function () {
+        let documentClasses = document.body.classList;
 
-        documentClasses.add("modal-open");	
+        documentClasses.add("modal-open");
     },
 
     mounted() {
@@ -150,10 +152,11 @@ export default {
             this.component = Vue.component('add-new-component', (resolve, reject) => {
                 resolve({
                     template : '<div id="modal-add-new-form-' + form_prefix + '">' + this.message + '</div>',
-
+                    mixins: [Global],
                     components: {
                         AkauntingRadioGroup,
                         AkauntingSelect,
+                        AkauntingSelectRemote,
                         AkauntingModal,
                         AkauntingMoney,
                         AkauntingDate,
@@ -238,6 +241,12 @@ export default {
                                 this.form.currency = response.data.currency_name;
                                 this.form.currency_code = response.data.currency_code;
                                 this.form.currency_rate = response.data.currency_rate;
+
+                                this.currency.decimal = response.data.decimal_mark;
+                                this.currency.thousands = response.data.thousands_separator;
+                                this.currency.prefix = (response.data.symbol_first) ? response.data.symbol : '';
+                                this.currency.suffix = (!response.data.symbol_first) ? response.data.symbol : '';
+                                this.currency.precision = parseInt(response.data.precision);
                             })
                             .catch(error => {
                             });

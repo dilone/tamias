@@ -2,7 +2,11 @@
 
     <div
         class="form-group {{ $col }}{{ isset($attributes['required']) ? ' required' : '' }}{{ isset($attributes['readonly']) ? ' readonly' : '' }}{{ isset($attributes['disabled']) ? ' disabled' : '' }}"
-        :class="[{'has-error': {{ isset($attributes['v-error']) ? $attributes['v-error'] : 'form.errors.get("' . $name . '")' }} }]">
+        :class="[{'has-error': {{ isset($attributes['v-error']) ? $attributes['v-error'] : 'form.errors.get("' . $name . '")' }} }]"
+        @if (isset($attributes['show']))
+        v-if="{{ $attributes['show'] }}"
+        @endif
+        >
         @if (!empty($text))
             {!! Form::label($name, $text, ['class' => 'form-control-label'])!!}
         @endif
@@ -21,6 +25,7 @@
                         {{ Form::checkbox($name, $item->$id, (is_array($selected) && count($selected) ? (in_array($item->$id, $selected) ? true : false) : null), array_merge([
                             'id' => 'checkbox-' . $name . '-' . $item->$id,
                             'class' => 'custom-control-input',
+                            'data-type' => (is_array($selected)) ? 'multiple' : 'single',
                             'v-model' => !empty($attributes['v-model']) ? $attributes['v-model'] : (!empty($attributes['data-field']) ? 'form.' . $attributes['data-field'] . '.'. $name : 'form.' . $name),
                         ], $item_attributes)) }}
 

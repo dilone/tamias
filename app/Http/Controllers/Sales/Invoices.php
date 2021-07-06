@@ -14,7 +14,6 @@ use App\Jobs\Document\UpdateDocument;
 use App\Models\Document\Document;
 use App\Notifications\Sale\Invoice as Notification;
 use App\Traits\Documents;
-use File;
 
 class Invoices extends Controller
 {
@@ -127,20 +126,16 @@ class Invoices extends Controller
      */
     public function import(ImportRequest $request)
     {
-        $response = $this->importExcel(new Import, $request);
+        $response = $this->importExcel(new Import, $request, trans_choice('general.invoices', 2));
 
         if ($response['success']) {
             $response['redirect'] = route('invoices.index');
 
-            $message = trans('messages.success.imported', ['type' => trans_choice('general.invoices', 2)]);
-
-            flash($message)->success();
+            flash($response['message'])->success();
         } else {
             $response['redirect'] = route('import.create', ['sales', 'invoices']);
 
-            $message = $response['message'];
-
-            flash($message)->error()->important();
+            flash($response['message'])->error()->important();
         }
 
         return response()->json($response);
@@ -272,33 +267,8 @@ class Invoices extends Controller
             return redirect()->back();
         }
 
-        $invoice = $this->prepareInvoice($invoice);
-
-        $view = view($invoice->template_path, compact('invoice'))->render();
-        $html = mb_convert_encoding($view, 'HTML-ENTITIES');
-
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadHTML($html);
-
-        $file_name = $this->getDocumentFileName($invoice);
-
-        $file = storage_path('app/temp/' . $file_name);
-
-        $invoice->pdf_path = $file;
-
-        // Save the PDF file into temp folder
-        $pdf->save($file);
-
         // Notify the customer
-        $invoice->contact->notify(new Notification($invoice, 'invoice_new_customer'));
-
-        // Delete temp file
-        File::delete($file);
-
-        unset($invoice->paid);
-        unset($invoice->template_path);
-        unset($invoice->pdf_path);
-        unset($invoice->reconciled);
+        $invoice->contact->notify(new Notification($invoice, 'invoice_new_customer', true));
 
         event(new \App\Events\Document\DocumentSent($invoice));
 
@@ -316,7 +286,7 @@ class Invoices extends Controller
      */
     public function printInvoice(Document $invoice)
     {
-        $invoice = $this->prepareInvoice($invoice);
+        event(new \App\Events\Document\DocumentPrinting($invoice));
 
         $view = view($invoice->template_path, compact('invoice'));
 
@@ -332,7 +302,7 @@ class Invoices extends Controller
      */
     public function pdfInvoice(Document $invoice)
     {
-        $invoice = $this->prepareInvoice($invoice);
+        event(new \App\Events\Document\DocumentPrinting($invoice));
 
         $currency_style = true;
 
@@ -371,30 +341,5 @@ class Invoices extends Controller
         }
 
         return redirect()->back();
-    }
-
-    protected function prepareInvoice(Document $invoice)
-    {
-        $paid = 0;
-
-        foreach ($invoice->transactions as $item) {
-            $amount = $item->amount;
-
-            if ($invoice->currency_code != $item->currency_code) {
-                $item->default_currency_code = $invoice->currency_code;
-
-                $amount = $item->getAmountConvertedFromDefault();
-            }
-
-            $paid += $amount;
-        }
-
-        $invoice->paid = $paid;
-
-        $invoice->template_path = 'sales.invoices.print_' . setting('invoice.template');
-
-        event(new \App\Events\Document\DocumentPrinting($invoice));
-
-        return $invoice;
     }
 }

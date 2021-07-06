@@ -12,6 +12,8 @@ class SearchString extends Component
 
     public $filters;
 
+    public $filtered;
+
     /** string */
     public $model;
 
@@ -20,10 +22,11 @@ class SearchString extends Component
      *
      * @return void
      */
-    public function __construct(string $model = '', $filters = false)
+    public function __construct(string $model = '', $filters = false, $filtered = false)
     {
         $this->model = $model;
         $this->filters = $filters;
+        $this->filtered = $filtered;
     }
 
     /**
@@ -73,7 +76,7 @@ class SearchString extends Component
     {
         $filter = true;
 
-        if (empty($this->getFilterUrl($column, $options)) && (!isset($options['date']) && !isset($options['boolean']))) {
+        if (empty($this->getFilterUrl($column, $options)) && (!isset($options['date']) && !isset($options['boolean']) && !isset($options['values']))) {
             $filter = false;
         }
 
@@ -199,6 +202,10 @@ class SearchString extends Component
                     'value' => empty($options['translation']) ? trans('general.yes') : trans($options['translation'][1]),
                 ],
             ];
+        } else if (isset($options['values'])) {
+            foreach ($options['values'] as $key => $value) {
+                $values[$key] = trans($value);
+            }
         } else if ($search = request()->get('search', false)) {
             $fields = explode(' ', $search);
 

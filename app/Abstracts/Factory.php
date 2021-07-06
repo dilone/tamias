@@ -26,11 +26,14 @@ abstract class Factory extends BaseFactory
     {
         parent::__construct(...$arguments);
 
+        config(['mail.default' => 'array']);
+
         $this->user = User::first();
         $this->company = $this->user->companies()->first();
 
-        session(['company_id' => $this->company->id]);
-        setting()->setExtraColumns(['company_id' => $this->company->id]);
+        company($this->company->id)->makeCurrent();
+
+        app('url')->defaults(['company_id' => company_id()]);
     }
 
     public function getCompanyUsers()

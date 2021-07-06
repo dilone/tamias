@@ -160,6 +160,7 @@ return [
     'recurring_and_more'    => 'Wiederkehrend und mehr..',
     'due_on'                => 'Fällig am',
     'amount_due'            => 'Fälliger Betrag',
+    'financial_year'        => 'Geschäftsjahr',
 
     'card' => [
         'cards'                 => 'Karte|Karten',
@@ -187,7 +188,7 @@ return [
             'field'         => '- :field auswählen -',
             'file'          => 'Datei auswählen',
         ],
-        'add'               => ':field neu hinzufügen',
+        'add'               => ':field hinzufügen',
         'add_an'            => ':field neu hinzufügen',
         'add_new'           => ':field neu hinzufügen',
         'edit'              => ':field bearbeiten',

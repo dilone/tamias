@@ -8,9 +8,13 @@ return [
         'deleted'           => ':type izbrisano!',
         'duplicated'        => ':type duplicirano!',
         'imported'          => ':type uvezeno!',
+        'import_queued'     => ':type uvoz he zakaan! Dobicete email kad se završi.',
         'exported'          => ': type izvezeno!',
+        'export_queued'     => ':type izvoz je zakazan! Dobićete email kad se završi.',
         'enabled'           => ': type omogućeno!',
         'disabled'          => ':type onemogućeno!',
+
+        'clear_all'         => 'Super! Očistili ste sve svoje :type.',
     ],
 
     'error' => [

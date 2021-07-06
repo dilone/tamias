@@ -9,6 +9,14 @@
     font-style: normal;
 }
 
+body {
+    height: 100%;
+}
+
+.datepicker[readonly] {
+    background-color: transparent !important;
+}
+
 /*--Layout Content--*/
 .content-layout {
     max-width: 1300px !important;
@@ -211,6 +219,22 @@ button:focus {
 /*--------Max Width 100 Pixel--------*/
 .mwpx-100 {
     max-width: 100px !important;
+}
+
+.mwpx-200 {
+    max-width: 200px !important;
+}
+
+.mwpx-300 {
+    max-width: 300px !important;
+}
+
+.mwpx-400 {
+    max-width: 400px !important;
+}
+
+.mwpx-500 {
+    max-width: 500px !important;
 }
 /*--------Max Width 100 Pixel Finish--------*/
 
@@ -655,6 +679,15 @@ table .align-items-center td span.badge {
         margin-bottom: -1rem;
     }
 
+    #header .header-body .btn,
+    .save-buttons .btn {
+        width: 100%;
+        height: 40px;
+        font-size: 0.875rem;
+        padding: 0.425rem 1.25rem;
+        margin-top: 16px;
+    }
+
     .header-button-top {
         width: 100%;
         height: 40px;
@@ -722,6 +755,14 @@ table .align-items-center td span.badge {
 
     .save-buttons {
         float: none !important;
+    }
+
+    input[type=hidden].form-control.datepicker.input {
+        display: none;
+    }
+
+    .item-columns-edit {
+        margin-left: 23px !important;
     }
 }
 /*--Xs Breakpoint Finish--*/
@@ -832,6 +873,7 @@ table .align-items-center td span.badge {
     max-width: 62px;
     padding-right: 0;
     padding-left: 0;
+    z-index: 999999;
 }
 
 .navbar-vertical .navbar-nav .nav-link:not(.active) {
@@ -941,6 +983,15 @@ table .align-items-center td span.badge {
 .table-padding-05 td {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+}
+
+.difference-money .disabled-money {
+    background-color: transparent !important;
+    border: none;
+}
+
+.banking-price-text {
+    color: #525f7f;
 }
 
 .disabled-money,
@@ -1479,6 +1530,208 @@ table .align-items-center td span.badge {
     display: none !important;
 }
 
-#form-select-companies span.el-tag.el-tag--info.el-tag--small.el-tag--light {
-    margin-top: -50px !important;
+.document-item-40-px {
+    width: 40px;
 }
+
+.document-item-10 {
+    width: 10%;
+}
+
+.document-item-20 {
+    width: 20%;
+}
+
+.document-item-25 {
+    width: 25%;
+}
+
+.document-item-30 {
+    width: 30%;
+}
+
+.document-total-50 {
+    width: 50%;
+}
+
+.document-total-30 {
+    width: 30%;
+}
+
+.document-total-25 {
+    width: 25%;
+}
+
+.document-total-40-px {
+    width: 40px;
+}
+
+@media (max-width: 575.98px) {
+    table#items {
+        min-width: 700px !important ;
+    }
+
+    .document-total-50 {
+        width: 20%;
+    }
+
+    .document-total-30 {
+        width: 40%;
+    }
+
+    .document-total-25 {
+        width: 35%;
+    }
+
+    .document-total-40-px {
+        max-width: 1px;
+        width: 1px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .item-add-new button.btn.btn-link.w-100 {
+        text-align: left;
+        padding-left: 15%;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+        .product-select .aka-select.aka-select--fluid.is-open {
+            position: relative;
+            height: 460px;
+            margin-top: unset !important;
+        }
+      }
+}
+/* Color Picker Submit Button Start */
+
+.el-button.el-color-dropdown__btn.el-button--default.el-button--mini.is-plain {
+    color: #ffffff;
+    border-color: #6da252;
+    background-color: #6da252;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgb(30 31 57 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+    /*transition: all .15s ease; */
+    letter-spacing: .025em;
+    font-size: .75rem;
+    text-transform: none;
+    will-change: transform;
+}
+
+.el-button.el-color-dropdown__btn.el-button--default.el-button--mini.is-plain:hover {
+    animation:  0.7s ease alternate infinite;
+    animation-delay: 0.28s;
+    color: #fff !important;
+    background-color: #6da252 !important;
+    box-shadow: 0 7px 14px rgb(50 50 93 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+    border-color:#6da252 !important;
+}
+
+ /* Color Picker Submit Button Finish */
+
+ /* Color Picker Submit Button Start */
+
+.el-button.el-color-dropdown__link-btn.el-button--text.el-button--mini {
+    color: #55588b;
+    border-color: transparent;
+    background-color: transparent;
+    background-image: none;
+    transition: all .15s ease;
+    letter-spacing: .025em;
+    font-size: .75rem;
+    will-change: transform;
+    padding: 0.438rem 0.938rem;
+    font-weight: 600;
+ }
+
+.el-button.el-color-dropdown__link-btn.el-button--text.el-button--mini:hover {
+    border-color: transparent;
+    background-color: #e5e5e5;
+    box-shadow: none;
+}
+
+ /* Color Picker Submit Button Finish */
+
+/* Select Tag Fixed Content Start */
+.form-group .el-select .el-select__tags > span {
+    display: contents !important;
+}
+/* Select Tag Fixed Content Finish */
+
+/* Line item */
+.line-item-link-container {
+    height: 25px;
+}
+
+.line-item-link {
+    display: flex;
+    padding-bottom: 10px;
+    top: -12px;
+}
+
+.line-item-area {
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+
+.line-item-content {
+    position: relative;
+    width: 100%;
+    max-width: 242px;
+}
+
+.line-item-content .form-group {
+    position: relative;
+}
+
+.line-item-content .badge {
+    position: absolute !important;
+    bottom: 12px;
+    right: 0;
+}
+
+.line-item-content-right {
+    display: flex;
+    align-items: center;
+}
+
+.line-item-content-right-price  {
+    padding-right: 1.5rem;
+}
+
+.line-item-content-right-delete {
+    width:40px;
+    padding-right: 1.5rem;
+    /* padding-left: 5px !important; */
+}
+
+.line-item-text {
+    width: 54px;
+    text-align: right;
+}
+
+@media (max-width: 1500px) {
+  @media not all and (min-resolution:.001dpcm) { @media {
+
+    .line-item-content {
+        max-width:223px;
+    }
+}}
+}
+
+@media only screen and (max-width: 600px) {
+    .line-item-content {
+        max-width: 133px;
+    }
+}
+
+/* Line item */
+
+/* Accordion Header Arrow Start */
+
+.modal .modal-content .card-header::after {
+    display: none !important;
+}
+
+/* Accordion Header Arrow Finish */

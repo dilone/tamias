@@ -34,8 +34,8 @@ return [
     'compares'              => 'Inkomst mot Utgift | Inkomster mot Utgifter',
     'notes'                 => 'Anteckning | Anteckningar',
     'totals'                => 'Summa | Summor',
-    'languages'             => 'Språk | Språk',
-    'updates'               => 'Uppdatering | Uppdateringar',
+    'languages'             => 'Språk|Språk',
+    'updates'               => 'Uppdatering|Uppdateringar',
     'numbers'               => 'Siffra | Siffror',
     'statuses'              => 'Status | Statusar',
     'others'                => 'Andra | Andra',
@@ -51,6 +51,7 @@ return [
     'templates'             => 'Mall|mallar',
     'sales'                 => 'Sälj|Försäljning',
     'purchases'             => 'Inköpning|Inköp',
+    'notifications'         => 'Notifiering|Notifikationer',
 
     'welcome'               => 'Välkommen',
     'banking'               => 'Banktjänster',
@@ -81,7 +82,7 @@ return [
     'delete_confirm'        => 'Bekräfta ta bort :name :type?',
     'name'                  => 'Namn',
     'email'                 => 'E-post',
-    'tax_number'            => 'Skattenummer',
+    'tax_number'            => 'Org.nr/Momsreg.nr',
     'phone'                 => 'Telefon',
     'address'               => 'Adress',
     'website'               => 'Webbplats',
@@ -160,6 +161,8 @@ return [
     'recurring_and_more'    => 'Återkommande och mer..',
     'due_on'                => 'Förfaller den',
     'amount_due'            => 'Belopp att betala',
+    'financial_year'        => 'Räkenskapsår',
+    'created'               => 'Skapad',
 
     'card' => [
         'cards'                 => 'Kort| Kort',
