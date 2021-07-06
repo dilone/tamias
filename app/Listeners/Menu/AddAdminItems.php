@@ -146,15 +146,9 @@ class AddAdminItems
         }
 
         // Apps
-<<<<<<< HEAD
-        // if ($user->can('read-modules-home')) {
-        //     $menu->route('apps.home.index', trans_choice('general.modules', 2), [], 80, ['icon' => 'fa fa-rocket']);
-        // }
-=======
-        $title = trim(trans_choice('general.modules', 2));
-        if ($this->canAccessMenuItem($title, 'read-modules-home')) {
-            $menu->route('apps.home.index', $title, [], 80, ['icon' => 'fa fa-rocket']);
-        }
->>>>>>> 50d92909903446545210d03e9178a4b1e99fbba0
+//        $title = trim(trans_choice('general.modules', 2));
+//        if ($this->canAccessMenuItem($title, 'read-modules-home')) {
+//            $menu->route('apps.home.index', $title, [], 80, ['icon' => 'fa fa-rocket']);
+//        }
     }
 }
