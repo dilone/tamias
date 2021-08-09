@@ -76,8 +76,10 @@
                                 @if (!$hideQuantity)
                                     <div>
                                         @stack('quantity_input_start')
-                                        <input type="text"
-                                            class="form-control text-center p-0"
+                                        <input 
+                                            type="number"
+                                            min="0"
+                                            class="form-control text-center p-0 input-number-disabled"
                                             :name="'items.' + index + '.quantity'"
                                             autocomplete="off"
                                             required="required"
@@ -213,11 +215,12 @@
                                         :placeholder="'{{ trans('general.form.select.field', ['field' => trans_choice('general.taxes', 1)]) }}'"
                                         :name="'items.' + index + '.taxes.' + row_tax_index"
                                         :options="{{ json_encode($taxes->pluck('title', 'id')) }}"
+                                        :dynamic-options="dynamic_taxes"
                                         :disabled-options="form.items[index].tax_ids"
                                         :value="row_tax.id"
                                         @interface="row_tax.id = $event"
                                         @change="onCalculateTotal()"
-                                        @new="taxes.push($event)"
+                                        @new="dynamic_taxes.push($event)"
                                         :form-error="form.errors.get('items.' + index + '.taxes')"
                                         :no-data-text="'{{ trans('general.no_data') }}'"
                                         :no-matching-data-text="'{{ trans('general.no_matching_data') }}'"
@@ -252,6 +255,7 @@
                                         :placeholder="'{{ trans('general.form.select.field', ['field' => trans_choice('general.taxes', 1)]) }}'"
                                         :name="'items.' + index + '.taxes.999'"
                                         :options="{{ json_encode($taxes->pluck('title', 'id')) }}"
+                                        :dynamic-options="dynamic_taxes"
                                         :disabled-options="form.items[index].tax_ids"
                                         :value="tax_id"
                                         :add-new="{{ json_encode([
@@ -277,7 +281,7 @@
                                         ])}}"
                                         @interface="tax_id = $event"
                                         @visible-change="onSelectedTax(index)"
-                                        @new="taxes.push($event)"
+                                        @new="dynamic_taxes.push($event)"
                                         :form-error="form.errors.get('items.' + index + '.taxes')"
                                         :no-data-text="'{{ trans('general.no_data') }}'"
                                         :no-matching-data-text="'{{ trans('general.no_matching_data') }}'"

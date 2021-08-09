@@ -4,6 +4,7 @@ return [
 
     'bill_number'           => 'Número da conta',
     'bill_date'             => 'Data de Emissão',
+    'bill_amount'           => 'Valor da Conta',
     'total_price'           => 'Valor Total',
     'due_date'              => 'Data de Vencimento',
     'order_number'          => 'Número',
@@ -44,7 +45,7 @@ return [
         'status' => [
             'created'       => 'Criado em :date',
             'receive' => [
-                'draft'     => 'Não recebido',
+                'draft'     => 'Não Recebido',
                 'received'  => 'Recebido em :date',
             ],
             'paid' => [

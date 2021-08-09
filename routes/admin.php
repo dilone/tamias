@@ -128,14 +128,23 @@ Route::group(['prefix' => 'purchases'], function () {
 
 Route::group(['prefix' => 'banking'], function () {
     Route::get('accounts/currency', 'Banking\Accounts@currency')->name('accounts.currency');
+    Route::get('accounts/{account}/create-revenue', 'Banking\Accounts@createRevenue')->name('accounts.create-revenue');
+    Route::get('accounts/{account}/create-payment', 'Banking\Accounts@createPayment')->name('accounts.create-payment');
+    Route::get('accounts/{account}/create-transfer', 'Banking\Accounts@createTransfer')->name('accounts.create-transfer');
+    Route::get('accounts/{account}/see-performance', 'Banking\Accounts@seePerformance')->name('accounts.see-performance');
     Route::get('accounts/{account}/enable', 'Banking\Accounts@enable')->name('accounts.enable');
     Route::get('accounts/{account}/disable', 'Banking\Accounts@disable')->name('accounts.disable');
+    Route::get('accounts/{account}/duplicate', 'Banking\Accounts@duplicate')->name('accounts.duplicate');  
     Route::resource('accounts', 'Banking\Accounts', ['middleware' => ['date.format', 'money']]);
 
     Route::post('transactions/import', 'Banking\Transactions@import')->name('transactions.import');
     Route::get('transactions/export', 'Banking\Transactions@export')->name('transactions.export');
-    Route::resource('transactions', 'Banking\Transactions');
 
+    Route::resource('transactions', 'Banking\Transactions');
+  
+    Route::get('transfers/{transfer}/print', 'Banking\Transfers@printTransfer')->name('transfers.print');
+    Route::get('transfers/{transfer}/pdf', 'Banking\Transfers@pdfTransfer')->name('transfers.pdf');
+    Route::get('transfers/{transfer}/duplicate', 'Banking\Transfers@duplicate')->name('transfers.duplicate');
     Route::post('transfers/import', 'Banking\Transfers@import')->name('transfers.import');
     Route::get('transfers/export', 'Banking\Transfers@export')->name('transfers.export');
     Route::resource('transfers', 'Banking\Transfers', ['middleware' => ['date.format', 'money']]);
@@ -233,6 +242,7 @@ Route::group(['as' => 'modals.', 'prefix' => 'modals'], function () {
     Route::resource('vendors', 'Modals\Vendors');
     Route::resource('items', 'Modals\Items');
     Route::patch('invoice-templates', 'Modals\InvoiceTemplates@update')->name('invoice-templates.update');
+    Route::patch('transfer-templates', 'Modals\TransferTemplates@update')->name('transfer-templates.update');
     Route::get('documents/item-columns/edit', 'Modals\DocumentItemColumns@edit')->name('documents.item-columns.edit');
     Route::patch('documents/item-columns', 'Modals\DocumentItemColumns@update')->name('documents.item-columns.update');
     Route::resource('documents/{document}/transactions', 'Modals\DocumentTransactions', [
