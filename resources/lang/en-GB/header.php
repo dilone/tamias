@@ -21,13 +21,7 @@ return [
             'failed' => '{1} :count failed import|[2,*] :count failed imports',
         ],
     ],
-<<<<<<< HEAD
     'docs_link'             => 'https://cuatrokb.com/docs',
     'support_link'          => 'https://cuatrokb.com/support',
-=======
-
-    'docs_link'             => 'https://akaunting.com/docs',
-    'support_link'          => 'https://akaunting.com/support',
->>>>>>> 50d92909903446545210d03e9178a4b1e99fbba0
 
 ];
